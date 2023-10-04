@@ -1,21 +1,25 @@
-// [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
-
-enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
-
-class Usuario
-
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
-
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
-
-    val inscritos = mutableListOf<Usuario>()
-    
-    fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
-    }
-}
-
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+    val usuario1 = Usuario("Thalita", "Thalita@email.com", Nivel.BASICO)
+    val usuario2 = Usuario("Ana Maria", "anamaria@email.com", Nivel.INTERMEDIARIO)
+    val usuario3 = Usuario("Tiago", "tiago@email.com", Nivel.AVANCADO)
+
+    val conteudo1 = ConteudoEducacional("Java", 30, Nivel.BASICO)
+    val conteudo2 = ConteudoEducacional("Kotlin", 45, Nivel.INTERMEDIARIO)
+    val conteudo3 = ConteudoEducacional("PHP", 60, Nivel.AVANCADO)
+
+    val formacao = Formacao("Formação BackEnd", listOf(conteudo1, conteudo2, conteudo3))
+
+    formacao.matricular(usuario1) // OK
+    try {
+        formacao.matricular(usuario2)
+        formacao.matricular(usuario1) // Se Erro: usuário já inscrito
+    } catch (e: Exception) {
+        println(e.message)
+    }
+    formacao.matricular(usuario3) // OK
+
+    println("Usuários inscritos para a ${formacao.nome}:")
+    for (usuario in formacao.inscritos) {
+        println(usuario.nome)
+    }
 }
